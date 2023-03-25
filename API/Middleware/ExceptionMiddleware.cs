@@ -12,7 +12,7 @@ namespace API.Middleware
         public RequestDelegate _next { get; }
         public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, IHostEnvironment env)
         {
-            Next = next;
+            _next = next;
             _logger = logger;
             _env = env;
             
@@ -36,7 +36,7 @@ namespace API.Middleware
                     Status = 500,
                     Detail = _env.IsDevelopment() ? ex.StackTrace?.ToString() : null,
                     Title = ex.Message
-                }
+                };
 
                 var options = new JsonSerializerOptions{PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
 
